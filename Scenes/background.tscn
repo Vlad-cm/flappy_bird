@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddjsc8adwngpr"]
+
+[ext_resource type="Script" path="res://Scripts/background.gd" id="1_ooxyq"]
+[ext_resource type="Texture2D" uid="uid://6l3l4io8pgcf" path="res://Assets/background_sky.png" id="2_ecxi7"]
+[ext_resource type="Texture2D" uid="uid://c7bbmheq0mjj3" path="res://Assets/background_clouds.png" id="3_rjhun"]
+[ext_resource type="Texture2D" uid="uid://bbl1su235jfss" path="res://Assets/background_ground.png" id="4_qdfvp"]
+
+[node name="Background" type="ParallaxBackground"]
+script = ExtResource("1_ooxyq")
+
+[node name="Sky" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(288, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sky"]
+texture = ExtResource("2_ecxi7")
+centered = false
+
+[node name="Clouds" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(2, 2)
+motion_mirroring = Vector2(276, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Clouds"]
+texture = ExtResource("3_rjhun")
+centered = false
+
+[node name="Ground" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(3, 3)
+motion_mirroring = Vector2(276, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+texture = ExtResource("4_qdfvp")
+centered = false

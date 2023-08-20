@@ -1,0 +1,119 @@
+[gd_scene load_steps=13 format=3 uid="uid://djgrden422x6r"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_0vrhh"]
+[ext_resource type="PackedScene" uid="uid://durdxinluuequ" path="res://Scenes/player.tscn" id="1_kpkn4"]
+[ext_resource type="PackedScene" uid="uid://ddjsc8adwngpr" path="res://Scenes/background.tscn" id="2_aiwn6"]
+[ext_resource type="Texture2D" uid="uid://d1s4twwor0frm" path="res://Assets/gameover.png" id="4_ocyf7"]
+[ext_resource type="AudioStream" uid="uid://bwy5wekbvelhu" path="res://Sounds/sfx_hit.wav" id="5_ijbbt"]
+[ext_resource type="AudioStream" uid="uid://c3a4eop5fwnai" path="res://Sounds/sfx_point.wav" id="6_0ckfj"]
+[ext_resource type="AudioStream" uid="uid://b2cyn4u6c5pw6" path="res://Sounds/Grasslands Theme.mp3" id="7_qi7us"]
+[ext_resource type="AudioStream" uid="uid://b416kvo5mau1u" path="res://Sounds/Intro Theme.mp3" id="8_i2t3e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3me3l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_jwtnt"]
+font_size = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpxhh"]
+size = Vector2(288, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_amf4r"]
+size = Vector2(288, 1)
+
+[node name="Main" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_0vrhh")
+
+[node name="Background" parent="." instance=ExtResource("2_aiwn6")]
+process_mode = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.7
+
+[node name="Player" parent="." instance=ExtResource("1_kpkn4")]
+process_mode = 1
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(144, 256)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+offset = Vector2(140, 10)
+scale = Vector2(1.2, 1)
+transform = Transform2D(1.2, 0, 0, 1, 140, 10)
+follow_viewport_enabled = true
+
+[node name="RichTextLabel" type="Label" parent="CanvasLayer"]
+offset_left = -10.0
+offset_top = 46.0
+offset_right = 30.0
+offset_bottom = 86.0
+label_settings = SubResource("LabelSettings_3me3l")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer2"]
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 100.0
+offset_bottom = 42.0
+text = "HIGHSCORE"
+
+[node name="Score" type="Label" parent="CanvasLayer2"]
+offset_left = 104.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 39.0
+text = "0"
+
+[node name="Menu" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Menu"]
+offset_left = 48.0
+offset_top = 168.0
+offset_right = 240.0
+offset_bottom = 210.0
+texture = ExtResource("4_ocyf7")
+
+[node name="Label" type="Label" parent="Menu"]
+offset_left = 120.0
+offset_top = 272.0
+offset_right = 169.0
+offset_bottom = 324.0
+scale = Vector2(1.32, 1.08)
+text = "TAP"
+label_settings = SubResource("LabelSettings_jwtnt")
+
+[node name="ScreenTop" type="Area2D" parent="."]
+position = Vector2(144, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenTop"]
+shape = SubResource("RectangleShape2D_cpxhh")
+
+[node name="ScreenBottom" type="Area2D" parent="."]
+position = Vector2(144, 512)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBottom"]
+shape = SubResource("RectangleShape2D_amf4r")
+
+[node name="Smash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ijbbt")
+volume_db = -25.0
+
+[node name="Point" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_0ckfj")
+volume_db = -25.0
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_qi7us")
+volume_db = -15.0
+
+[node name="StartMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_i2t3e")
+volume_db = -15.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="Player" to="." method="_on_point_area_entered"]
+[connection signal="body_entered" from="Player" to="." method="_on_player_body_entered"]
+[connection signal="area_entered" from="ScreenTop" to="." method="_on_screen_area_entered"]
+[connection signal="area_entered" from="ScreenBottom" to="." method="_on_screen_area_entered"]
+[connection signal="finished" from="Smash" to="." method="_on_smash_finished"]

@@ -1,0 +1,85 @@
+[gd_scene load_steps=14 format=3 uid="uid://durdxinluuequ"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_asdyq"]
+[ext_resource type="Texture2D" uid="uid://dtnrw6oil1fjd" path="res://Assets/bird_blue_0.png" id="1_kuu0o"]
+[ext_resource type="Texture2D" uid="uid://b6webo7fgwwmu" path="res://Assets/bird_blue_1.png" id="2_dauxc"]
+[ext_resource type="Texture2D" uid="uid://pvhrgtodx4an" path="res://Assets/bird_blue_2.png" id="3_pl5q5"]
+[ext_resource type="Texture2D" uid="uid://58sic0skvnri" path="res://Assets/bird_orange_0.png" id="4_5kv45"]
+[ext_resource type="Texture2D" uid="uid://bymaiy6o3sg2i" path="res://Assets/bird_orange_1.png" id="5_1fsvl"]
+[ext_resource type="Texture2D" uid="uid://xl0kxl8oypcp" path="res://Assets/bird_orange_2.png" id="6_wu715"]
+[ext_resource type="Texture2D" uid="uid://c8te808bee0hk" path="res://Assets/bird_red_0.png" id="7_2jhx0"]
+[ext_resource type="Texture2D" uid="uid://bfw1opj5bdla2" path="res://Assets/bird_red_1.png" id="8_2iumq"]
+[ext_resource type="Texture2D" uid="uid://by10uip6svy6t" path="res://Assets/bird_red_2.png" id="9_yy0w2"]
+[ext_resource type="AudioStream" uid="uid://dohfw5nd5061h" path="res://Sounds/sfx_wing.wav" id="11_vkfej"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_neb5h"]
+radius = 32.1266
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cp8b3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kuu0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dauxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_pl5q5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dauxc")
+}],
+"loop": true,
+"name": &"bird_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5kv45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1fsvl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wu715")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1fsvl")
+}],
+"loop": true,
+"name": &"bird_orange",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_2jhx0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2iumq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_yy0w2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2iumq")
+}],
+"loop": true,
+"name": &"bird_red",
+"speed": 5.0
+}]
+
+[node name="Player" type="Area2D"]
+script = ExtResource("1_asdyq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.840426, 0.606383)
+shape = SubResource("CircleShape2D_neb5h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cp8b3")
+animation = &"bird_red"
+
+[node name="Flap" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_vkfej")
+volume_db = -25.0
